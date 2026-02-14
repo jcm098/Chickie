@@ -1,0 +1,56 @@
+{
+  "name": "Chicken Tracker",
+  "short_name": "ChickieTracker",
+  "description": "Track eggs, feed, water, health, chores, and day-to-day flock care",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6ef",
+  "theme_color": "#1f7a53",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231f7a53' width='192' height='192'/><text x='96' y='120' font-size='80' font-weight='bold' fill='%23d5ef75' text-anchor='middle' font-family='serif'>🐔</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%231f7a53' width='512' height='512'/><text x='256' y='340' font-size='220' fill='%23d5ef75' text-anchor='middle' font-family='serif'>🐔</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%235fd386' width='192' height='192'/><text x='96' y='120' font-size='80' font-weight='bold' fill='%231a1f1c' text-anchor='middle' font-family='serif'>🐔</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f3f6ef' width='540' height='720'/><text x='270' y='360' font-size='120' text-anchor='middle' font-family='serif'>🐔 Chicken Tracker</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Log Eggs",
+      "short_name": "Eggs",
+      "description": "Quick access to log eggs",
+      "url": "./index.html#eggs-form",
+      "icons": []
+    },
+    {
+      "name": "Settings",
+      "short_name": "Config",
+      "description": "Open settings panel",
+      "url": "./index.html#settings-panel",
+      "icons": []
+    }
+  ]
+}

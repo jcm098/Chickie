@@ -91,6 +91,40 @@ h1 {
   margin: 0;
 }
 
+.settings-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background-color: rgba(19, 39, 24, 0.1);
+}
+
+.icon-btn:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon-btn:hover {
+    background-color: rgba(232, 241, 237, 0.15);
+  }
+}
+
 .profile-box.collapsed {
   padding-bottom: 0.75rem;
 }
@@ -412,4 +446,203 @@ button:hover {
     justify-content: flex-end;
     flex-wrap: wrap;
   }
+}
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1410;
+    --panel: #1a1f1c;
+    --ink: #e8f1ed;
+    --muted: #9db0a8;
+    --brand: #5fd386;
+    --brand-2: #4a6e3e;
+    --warn: #ff6b5b;
+    --ring: #6ba3d9;
+    --shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 10% 10%, rgba(74, 110, 62, 0.2) 0%, rgba(74, 110, 62, 0) 35%),
+      radial-gradient(circle at 90% 20%, rgba(93, 211, 134, 0.1) 0%, rgba(93, 211, 134, 0) 38%),
+      var(--bg);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    background-color: var(--panel);
+    color: var(--ink);
+    border-color: rgba(232, 241, 237, 0.15);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted);
+  }
+
+  /* Buttons in dark mode */
+  button {
+    background-color: var(--brand);
+    color: var(--bg);
+  }
+
+  button:hover,
+  button:focus {
+    opacity: 0.9;
+  }
+
+  .ghost-btn,
+  .ghost {
+    background-color: transparent;
+    color: var(--brand);
+    border: 1px solid var(--brand);
+  }
+
+  .ghost-btn:hover,
+  .ghost:hover {
+    background-color: var(--brand);
+    color: var(--bg);
+  }
+
+  .danger {
+    background-color: var(--warn);
+    color: #fff;
+  }
+
+  .danger:hover {
+    opacity: 0.9;
+  }
+
+  /* Form inputs focus state */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Chart text colors for dark mode */
+  .chart-canvas {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+/* Forced Light Mode - Override system preference */
+html.light-mode {
+  --bg: #f3f6ef;
+  --panel: #fcfdf9;
+  --ink: #132718;
+  --muted: #4f6a56;
+  --brand: #1f7a53;
+  --brand-2: #d5ef75;
+  --warn: #b73d2f;
+  --ring: #7cb8ff;
+  --shadow: 0 12px 26px rgba(19, 39, 24, 0.11);
+}
+
+html.light-mode body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(213, 239, 117, 0.43) 0%, rgba(213, 239, 117, 0) 35%),
+    radial-gradient(circle at 90% 20%, rgba(31, 122, 83, 0.19) 0%, rgba(31, 122, 83, 0) 38%),
+    var(--bg);
+}
+
+html.light-mode input,
+html.light-mode textarea,
+html.light-mode select,
+html.light-mode button {
+  background-color: var(--panel);
+  color: var(--ink);
+  border: 1px solid rgba(19, 39, 24, 0.15);
+}
+
+html.light-mode .chart-canvas {
+  filter: none;
+}
+
+/* Forced Dark Mode - Override system preference */
+html.dark-mode {
+  --bg: #0f1410;
+  --panel: #1a1f1c;
+  --ink: #e8f1ed;
+  --muted: #9db0a8;
+  --brand: #5fd386;
+  --brand-2: #4a6e3e;
+  --warn: #ff6b5b;
+  --ring: #6ba3d9;
+  --shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+html.dark-mode body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(74, 110, 62, 0.2) 0%, rgba(74, 110, 62, 0) 35%),
+    radial-gradient(circle at 90% 20%, rgba(93, 211, 134, 0.1) 0%, rgba(93, 211, 134, 0) 38%),
+    var(--bg);
+}
+
+html.dark-mode input,
+html.dark-mode textarea,
+html.dark-mode select,
+html.dark-mode button {
+  background-color: var(--panel);
+  color: var(--ink);
+  border-color: rgba(232, 241, 237, 0.15);
+}
+
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder {
+  color: var(--muted);
+}
+
+html.dark-mode button {
+  background-color: var(--brand);
+  color: var(--bg);
+}
+
+html.dark-mode button:hover,
+html.dark-mode button:focus {
+  opacity: 0.9;
+}
+
+html.dark-mode .ghost-btn,
+html.dark-mode .ghost {
+  background-color: transparent;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+}
+
+html.dark-mode .ghost-btn:hover,
+html.dark-mode .ghost:hover {
+  background-color: var(--brand);
+  color: var(--bg);
+}
+
+html.dark-mode .danger {
+  background-color: var(--warn);
+  color: #fff;
+}
+
+html.dark-mode .danger:hover {
+  opacity: 0.9;
+}
+
+html.dark-mode input:focus,
+html.dark-mode textarea:focus,
+html.dark-mode select:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+html.dark-mode .chart-canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html.dark-mode .icon-btn:hover {
+  background-color: rgba(232, 241, 237, 0.15);
+}
+
+html.light-mode .icon-btn:hover {
+  background-color: rgba(19, 39, 24, 0.1);
 }

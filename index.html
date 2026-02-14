@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1f7a53" />
+    <meta name="description" content="Track eggs, feed, water, health, chores, and day-to-day flock care" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' text-anchor='middle' x='50'>🐔</text></svg>" />
     <title>Chicken Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +29,12 @@
         <div class="profile-box" id="settings-panel">
           <div class="settings-head">
             <h2>Settings</h2>
-            <button id="settings-toggle" type="button" class="ghost-btn">Hide Settings</button>
+            <div class="settings-buttons">
+              <button id="theme-toggle" type="button" class="icon-btn" aria-label="Toggle dark/light mode" title="Toggle theme">
+                <span id="theme-icon">🌙</span>
+              </button>
+              <button id="settings-toggle" type="button" class="ghost-btn">Hide Settings</button>
+            </div>
           </div>
           <div id="settings-content">
             <h2>Flock Profile</h2>
@@ -41,6 +49,19 @@
               </label>
               <button type="submit">Save Profile</button>
             </form>
+            <hr />
+            <h2>Appearance</h2>
+            <div class="stack">
+              <label for="theme-preference">
+                Theme
+                <select id="theme-preference" aria-label="Choose color theme">
+                  <option value="system">System Setting</option>
+                  <option value="light">Light Mode</option>
+                  <option value="dark">Dark Mode</option>
+                </select>
+              </label>
+              <p class="hint" id="theme-status">Using system preference</p>
+            </div>
             <hr />
             <h2>Household Team</h2>
             <div class="stack">
@@ -92,9 +113,9 @@
         <article class="panel">
           <div class="panel-head">
             <h3>Production Chart</h3>
-            <label>
+            <label for="chart-window">
               Window
-              <select id="chart-window">
+              <select id="chart-window" aria-label="Chart time window">
                 <option value="7">7 days</option>
                 <option value="14">14 days</option>
                 <option value="30" selected>30 days</option>
@@ -209,8 +230,10 @@
             <button id="reset-btn" class="danger" type="button">Reset All Data</button>
             <p class="hint">
               Tip: export weekly to keep backups of your flock history.
-            </p>
-          </div>
+            </p>            <hr style="margin: 1rem 0; opacity: 0.3;" />
+            <p class="hint" style="margin: 0.5rem 0; font-size: 0.85rem;">
+              <strong id="app-version">Chicken Tracker</strong>
+            </p>          </div>
         </article>
       </section>
     </main>
@@ -224,6 +247,12 @@
 
     <script src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-    <script src="./app.js"></script>
+    <!-- Modular architecture -->
+    <script src="./utils.js"></script>
+    <script src="./data.js"></script>
+    <script src="./cloudkit.js"></script>
+    <script src="./charts.js"></script>
+    <script src="./ui.js"></script>
+    <script src="./app-new.js"></script>
   </body>
 </html>
