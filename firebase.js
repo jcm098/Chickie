@@ -103,9 +103,15 @@ function updateSyncButtons() {
   const signedIn = firebaseAvailable && firebaseUser;
   const signInBtn = document.getElementById("firebase-signin-btn");
   const signOutBtn = document.getElementById("firebase-signout-btn");
+  const createFlockBtn = document.getElementById("create-flock-btn");
+  const pushBtn = document.getElementById("push-firebase-btn");
+  const pullBtn = document.getElementById("pull-firebase-btn");
 
   if (signInBtn) signInBtn.disabled = !firebaseAvailable || signedIn;
   if (signOutBtn) signOutBtn.disabled = !signedIn;
+  if (createFlockBtn) createFlockBtn.disabled = !signedIn;
+  if (pushBtn) pushBtn.disabled = !signedIn || !currentFlockId;
+  if (pullBtn) pullBtn.disabled = !signedIn || !currentFlockId;
 }
 
 /**
@@ -123,6 +129,8 @@ async function loadUserFlocks() {
       if (typeof renderFlockSelector === "function") {
         renderFlockSelector(userFlocks);
       }
+      
+      updateSyncButtons();
       
       if (userFlocks.length === 0) {
         setSyncStatus("No flocks yet. Create a new one or join a shared flock.");
@@ -199,6 +207,7 @@ async function selectFlock(flockId) {
     currentFlockId = flockId;
   }
   startRealtimeSync();
+  updateSyncButtons();
 }
 
 /**

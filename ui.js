@@ -22,6 +22,9 @@ const refs = {
   settingsToggle: null,
   firebaseSigninBtn: null,
   firebaseSignoutBtn: null,
+  createFlockBtn: null,
+  pushFirebaseBtn: null,
+  pullFirebaseBtn: null,
   flockSelector: null,
   syncStatus: null,
   autoSync: null,
@@ -53,6 +56,9 @@ function initReferences() {
   refs.settingsToggle = document.getElementById("settings-toggle");
   refs.firebaseSigninBtn = document.getElementById("firebase-signin-btn");
   refs.firebaseSignoutBtn = document.getElementById("firebase-signout-btn");
+  refs.createFlockBtn = document.getElementById("create-flock-btn");
+  refs.pushFirebaseBtn = document.getElementById("push-firebase-btn");
+  refs.pullFirebaseBtn = document.getElementById("pull-firebase-btn");
   refs.flockSelector = document.getElementById("flock-selector");
   refs.syncStatus = document.getElementById("sync-status");
   refs.autoSync = document.getElementById("auto-sync");
@@ -150,6 +156,9 @@ function bindForms() {
   // Firebase sync
   refs.firebaseSigninBtn.addEventListener("click", signInFirebase);
   refs.firebaseSignoutBtn.addEventListener("click", signOutFirebase);
+  refs.createFlockBtn.addEventListener("click", onCreateFlock);
+  refs.pushFirebaseBtn.addEventListener("click", pushToFirebase);
+  refs.pullFirebaseBtn.addEventListener("click", pullFromFirebase);
   refs.flockSelector.addEventListener("change", onFlockSelect);
 
   // Charts
@@ -241,6 +250,13 @@ function onFlockSelect() {
   const selectedFlockId = refs.flockSelector.value;
   if (selectedFlockId && typeof selectFlock === "function") {
     selectFlock(selectedFlockId);
+  }
+}
+
+function onCreateFlock() {
+  const flockName = prompt("Enter flock name:", "My Flock");
+  if (flockName && typeof createNewFlock === "function") {
+    createNewFlock(flockName);
   }
 }
 
