@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1f7a53" />
+    <title>Chicken Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Flock Care Dashboard</p>
+          <h1>Chicken Tracker</h1>
+          <p class="subtitle">
+            Track eggs, feed, water, health, chores, and all day-to-day flock care in one place.
+          </p>
+        </div>
+        <div class="profile-box" id="settings-panel">
+          <div class="settings-head">
+            <h2>Settings</h2>
+            <button id="settings-toggle" type="button" class="ghost-btn">Hide Settings</button>
+          </div>
+          <div id="settings-content">
+            <h2>Flock Profile</h2>
+            <form id="profile-form">
+              <label>
+                Flock Name
+                <input id="flock-name" type="text" placeholder="Backyard Layers" />
+              </label>
+              <label>
+                Hen Count
+                <input id="hen-count" type="number" min="0" step="1" />
+              </label>
+              <button type="submit">Save Profile</button>
+            </form>
+            <hr />
+            <h2>Household Team</h2>
+            <div class="stack">
+              <label>
+                Active Logger
+                <select id="active-member"></select>
+              </label>
+              <form id="member-form" class="member-form">
+                <input id="member-name" type="text" placeholder="Add family member name" required />
+                <button type="submit">Add</button>
+              </form>
+              <div id="members-list" class="list compact"></div>
+              <div class="member-merge">
+                <label>
+                  Merge Member Records
+                  <div class="merge-row">
+                    <select id="merge-from-member"></select>
+                    <span>to</span>
+                    <select id="merge-to-member"></select>
+                  </div>
+                </label>
+                <button id="merge-members-btn" type="button" class="ghost-btn">Merge</button>
+              </div>
+            </div>
+            <hr />
+            <h2>iCloud Sync (Apple ID)</h2>
+            <div class="stack">
+              <div class="button-row">
+                <button id="icloud-signin-btn" type="button">Sign In with Apple</button>
+                <button id="icloud-signout-btn" type="button" class="ghost-btn">Sign Out</button>
+                <button id="pull-sync-btn" type="button" class="ghost-btn">Pull from iCloud</button>
+                <button id="push-sync-btn" type="button" class="ghost-btn">Push to iCloud</button>
+              </div>
+              <label class="inline-check">
+                <input id="auto-sync" type="checkbox" />
+                Auto-push after changes
+              </label>
+              <p class="hint" id="sync-status">
+                Sign in with Apple to sync this tracker with iCloud.
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="stats-grid" id="stats-grid"></section>
+
+      <section class="trend-grid">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Production Chart</h3>
+            <label>
+              Window
+              <select id="chart-window">
+                <option value="7">7 days</option>
+                <option value="14">14 days</option>
+                <option value="30" selected>30 days</option>
+              </select>
+            </label>
+          </div>
+          <div class="chart-frame">
+            <canvas id="production-chart" class="chart-canvas"></canvas>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Feed & Water Chart</h3>
+          <div class="chart-frame">
+            <canvas id="consumption-chart" class="chart-canvas"></canvas>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Member Activity (30 days)</h3>
+          <div class="chart-frame">
+            <canvas id="member-chart" class="chart-canvas"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <section class="module-grid">
+        <article class="panel">
+          <h3>Log Eggs</h3>
+          <form id="eggs-form" class="stack">
+            <label>Date <input name="date" type="date" required /></label>
+            <label>Eggs Collected <input name="count" type="number" min="0" step="1" required /></label>
+            <label>Broken/Dirty Eggs <input name="broken" type="number" min="0" step="1" value="0" /></label>
+            <button type="submit">Add Egg Record</button>
+          </form>
+          <div id="eggs-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Log Feed</h3>
+          <form id="feed-form" class="stack">
+            <label>Date <input name="date" type="date" required /></label>
+            <label>Feed Type <input name="type" type="text" placeholder="Layer pellets" required /></label>
+            <label>Amount (lb) <input name="kg" type="number" min="0" step="0.01" required /></label>
+            <button type="submit">Add Feed Record</button>
+          </form>
+          <div id="feed-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Log Water</h3>
+          <form id="water-form" class="stack">
+            <label>Date <input name="date" type="date" required /></label>
+            <label>Amount (gal) <input name="liters" type="number" min="0" step="0.1" required /></label>
+            <button type="submit">Add Water Record</button>
+          </form>
+          <div id="water-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Care Notes</h3>
+          <form id="care-form" class="stack">
+            <label>Date <input name="date" type="date" required /></label>
+            <label>
+              Category
+              <select name="category">
+                <option>Health</option>
+                <option>Cleaning</option>
+                <option>Behavior</option>
+                <option>Medication</option>
+                <option>Predator Risk</option>
+                <option>General</option>
+              </select>
+            </label>
+            <label>Notes <textarea name="note" rows="3" required></textarea></label>
+            <button type="submit">Add Care Note</button>
+          </form>
+          <div id="care-list" class="list"></div>
+        </article>
+      </section>
+
+      <section class="module-grid">
+        <article class="panel">
+          <h3>Recurring Tasks</h3>
+          <form id="task-form" class="stack">
+            <label>Task Name <input name="name" type="text" placeholder="Clean coop bedding" required /></label>
+            <label>Every X days <input name="cadenceDays" type="number" min="1" step="1" value="7" required /></label>
+            <label>Last Done <input name="lastDone" type="date" required /></label>
+            <button type="submit">Add Task</button>
+          </form>
+          <div id="task-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Supplies & Inventory</h3>
+          <form id="inventory-form" class="stack">
+            <label>Item <input name="item" type="text" placeholder="Layer feed bags" required /></label>
+            <label>Quantity <input name="quantity" type="number" min="0" step="0.01" required /></label>
+            <label>Unit <input name="unit" type="text" placeholder="bags, lb, gal, bottles" required /></label>
+            <label>Low Alert At <input name="threshold" type="number" min="0" step="0.01" required /></label>
+            <button type="submit">Add Item</button>
+          </form>
+          <div id="inventory-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Data Tools</h3>
+          <div class="stack">
+            <button id="export-btn" type="button">Export Data (JSON)</button>
+            <label class="file-input">
+              Import Data (JSON)
+              <input id="import-input" type="file" accept="application/json" />
+            </label>
+            <button id="reset-btn" class="danger" type="button">Reset All Data</button>
+            <p class="hint">
+              Tip: export weekly to keep backups of your flock history.
+            </p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <template id="row-template">
+      <div class="row">
+        <div class="row-main"></div>
+        <div class="row-actions"></div>
+      </div>
+    </template>
+
+    <script src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
