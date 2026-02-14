@@ -22,6 +22,7 @@ const refs = {
   settingsToggle: null,
   firebaseSigninBtn: null,
   firebaseSignoutBtn: null,
+  flockSelector: null,
   syncStatus: null,
   autoSync: null,
   chartWindow: null,
@@ -52,6 +53,7 @@ function initReferences() {
   refs.settingsToggle = document.getElementById("settings-toggle");
   refs.firebaseSigninBtn = document.getElementById("firebase-signin-btn");
   refs.firebaseSignoutBtn = document.getElementById("firebase-signout-btn");
+  refs.flockSelector = document.getElementById("flock-selector");
   refs.syncStatus = document.getElementById("sync-status");
   refs.autoSync = document.getElementById("auto-sync");
   refs.chartWindow = document.getElementById("chart-window");
@@ -148,6 +150,7 @@ function bindForms() {
   // Firebase sync
   refs.firebaseSigninBtn.addEventListener("click", signInFirebase);
   refs.firebaseSignoutBtn.addEventListener("click", signOutFirebase);
+  refs.flockSelector.addEventListener("change", onFlockSelect);
 
   // Charts
   refs.chartWindow.addEventListener("change", renderCharts);
@@ -232,6 +235,32 @@ function onMergeMembers() {
   } catch (error) {
     alert(handleError(error, "Merge failed"));
   }
+}
+
+function onFlockSelect() {
+  const selectedFlockId = refs.flockSelector.value;
+  if (selectedFlockId && typeof selectFlock === "function") {
+    selectFlock(selectedFlockId);
+  }
+}
+
+function renderFlockSelector(flocks) {
+  refs.flockSelector.innerHTML = "";
+  if (!flocks || flocks.length === 0) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "No flocks available";
+    option.disabled = true;
+    refs.flockSelector.appendChild(option);
+    return;
+  }
+
+  flocks.forEach((flockId) => {
+    const option = document.createElement("option");
+    option.value = flockId;
+    option.textContent = flockId.substring(0, 12) + "...";
+    refs.flockSelector.appendChild(option);
+  });
 }
 
 function onEggsSubmit(e) {

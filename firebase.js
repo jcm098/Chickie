@@ -119,6 +119,11 @@ async function loadUserFlocks() {
     userFlockRef.once("value", (snapshot) => {
       userFlocks = snapshot.val() ? Object.keys(snapshot.val()) : [];
       
+      // Render flock selector dropdown
+      if (typeof renderFlockSelector === "function") {
+        renderFlockSelector(userFlocks);
+      }
+      
       if (userFlocks.length === 0) {
         setSyncStatus("No flocks yet. Create a new one or join a shared flock.");
       } else {
