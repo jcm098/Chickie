@@ -205,7 +205,7 @@ function persist(options = {}) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     if (!options.skipAutoSync && data.household.autoSync) {
-      scheduleAutoSync();
+      // Auto-sync will be handled by Firebase when implemented
     }
     return true;
   } catch (error) {

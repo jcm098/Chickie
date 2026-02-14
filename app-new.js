@@ -1,6 +1,6 @@
 /**
  * Chicken Tracker - Main Application File
- * Modular architecture: utils.js, data.js, cloudkit.js, charts.js, ui.js
+ * Modular architecture: utils.js, data.js, firebase.js, charts.js, ui.js
  */
 
 const APP_VERSION = "2.1.0-optimized";
@@ -57,8 +57,8 @@ async function initApp() {
     // Render all UI elements
     renderAll();
 
-    // Initialize CloudKit for sync
-    initCloudKit();
+    // Initialize Firebase for sync
+    initFirebase();
 
     // Listen for storage changes from other tabs
     window.addEventListener("storage", handleStorageSync);

@@ -21,12 +21,11 @@ The monolithic `app.js` (1254 lines) has been split into focused, maintainable m
   - Migration from metric to imperial units
   - Storage quota error handling
 
-- **`cloudkit.js`** - Apple iCloud sync (180+ lines)
-  - CloudKit initialization and configuration
-  - Sign in/out functionality
-  - Push/pull synchronization
-  - Auto-sync with debouncing
-  - Error handling for cloud operations
+- **`firebase.js`** - Firebase Realtime Database sync (180+ lines)
+  - Firebase authentication with Google
+  - Real-time database synchronization
+  - Multi-device family data sharing
+  - Automatic conflict resolution
 
 - **`charts.js`** - Chart rendering (150+ lines)
   - Chart initialization and updates
@@ -137,16 +136,51 @@ Added safety confirmations for destructive actions:
 - User sees what went wrong
 - Clear action taken after confirmation
 
-### 6. **PWA (Progressive Web App) Support** ✅
+### 6. **Multi-Device Family Sharing (Firebase)** ✅
+Real-time data sync across devices for shared family flock:
+
+**Firebase Setup:**
+- Realtime Database for instant updates
+- Shared flock model - one flock, multiple family members
+- Google authentication for easy sign-in
+- Works on any device (iOS, Android, Windows, Mac, Linux)
+- Free tier suitable for family use
+
+**How Sharing Works:**
+- You create a flock (e.g., "Backyard Layers")
+- You invite wife/daughter via their email
+- Everyone sees the same eggs, feed, water, care notes
+- Changes sync in real-time across all devices
+- Each person signs in with their own Google account
+
+**Database Structure:**
+```
+/flocks/{flockId}/
+  - owner: "your-google-id"
+  - sharedWith: {wife-google-id: true, daughter-google-id: true}
+  - profile: {flockName, henCount, etc}
+  - eggs: {date, count, by, etc}
+  - feed, water, care, tasks, inventory...
+
+/userFlocks/{google-id}/{flockId}: true
+  (Quick lookup of user's flocks)
+```
+
+**Security:**
+- Locked mode with strict rules
+- Only users in `sharedWith` list can read/write
+- Owner can manage member list
+- No accidental data leaks
+
+### 7. **PWA (Progressive Web App) Support** ✅
 Full offline functionality and installability:
 
 **Service Worker (`service-worker.js`):**
 - Caches app assets on first load
-- Network-first strategy for external CDNs (Chart.js, CloudKit, fonts)
+- Network-first strategy for external CDNs (Chart.js, Firebase, fonts)
 - Cache-first strategy for local assets
 - Offline fallback functionality
 - Automatic cache cleanup on updates
-- Background sync ready for future sync improvements
 
 **Web App Manifest (`manifest.json`):**
 - App metadata for installation
@@ -174,7 +208,7 @@ Full offline functionality and installability:
 ├── app.js                  // Old app file (KEPT AS BACKUP)
 ├── utils.js                // Utility functions (6KB)
 ├── data.js                 // Data management (8KB)
-├── cloudkit.js             // Cloud sync (7KB)
+├── firebase.js             // Firebase multi-device sync (8KB)
 ├── charts.js               // Chart rendering (6KB)
 ├── ui.js                   // UI rendering (15KB)
 ├── index.html              // Updated with accessibility (9KB)
@@ -274,7 +308,71 @@ If needed, revert to the original monolithic version:
 2. Clear browser cache
 3. Refresh page
 
-## Questions or Issues?
+## Setup Instructions for Firebase
+
+To enable family data sharing:
+
+1. **Create a Firebase Project:**
+   - Go to [firebase.google.com](https://firebase.google.com)
+   - Click "Get Started"
+   - Create new project
+
+2. **Enable Realtime Database in Locked Mode:**
+   - In Firebase Console → Build → Realtime Database
+   - Create database → **Choose "Locked mode"**
+   - Add these security rules (Replace → Rules tab):
+   ```json
+   {
+     "rules": {
+       "flocks": {
+         "$flockId": {
+           ".read": "root.child('flocks').child($flockId).child('sharedWith').child(auth.uid).exists()",
+           ".write": "root.child('flocks').child($flockId).child('sharedWith').child(auth.uid).exists()",
+           ".validate": "newData.hasChildren(['owner', 'profile'])",
+           "owner": {".validate": "newData.isString()"},
+           "sharedWith": {
+             "$uid": {".validate": "newData.isBoolean()"}
+           }
+         }
+       },
+       "userFlocks": {
+         "$uid": {
+           ".read": "$uid === auth.uid",
+           ".write": "$uid === auth.uid"
+         }
+       }
+     }
+   }
+   ```
+   - This allows family members to share one flock
+   - Copy the database URL (looks like `https://your-project-rtdb.firebaseio.com`)
+
+3. **Get Your Credentials:**
+   - Project Settings → Your apps → Create app (Web)
+   - Copy the firebaseConfig object
+
+4. **Update `firebase.js`:**
+   - In [firebase.js](firebase.js#L8-L15), replace FIREBASE_CONFIG:
+   ```javascript
+   const FIREBASE_CONFIG = {
+     apiKey: "YOUR_API_KEY_FROM_FIREBASE",
+     authDomain: "YOUR_PROJECT.firebaseapp.com",
+     projectId: "YOUR_PROJECT_ID",
+     storageBucket: "YOUR_PROJECT.appspot.com",
+     messagingSenderId: "YOUR_SENDER_ID",
+     appId: "YOUR_APP_ID"
+   };
+   ```
+
+5. **Using the Shared Flock:**
+   - Open app and sign in with Google
+   - Settings → Firebase Sync → Select or create a flock
+   - Wife and daughter sign in with their Google accounts
+   - To add them to the flock: In Firebase Console → Database → `flocks/{flockId}/sharedWith` → Add `{theirGoogleId: true}`
+   - When they sign in next, your shared flock appears in their flock list
+   - Everyone can view and update the same flock data instantly
+
+---
 
 - Check the browser console (F12) for error details
 - Ensure all required files are present

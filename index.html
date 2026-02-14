@@ -87,21 +87,17 @@
               </div>
             </div>
             <hr />
-            <h2>iCloud Sync (Apple ID)</h2>
+            <h2>Firebase Sync</h2>
             <div class="stack">
               <div class="button-row">
-                <button id="icloud-signin-btn" type="button">Sign In with Apple</button>
-                <button id="icloud-signout-btn" type="button" class="ghost-btn">Sign Out</button>
-                <button id="pull-sync-btn" type="button" class="ghost-btn">Pull from iCloud</button>
-                <button id="push-sync-btn" type="button" class="ghost-btn">Push to iCloud</button>
+                <button id="firebase-signin-btn" type="button">Sign In with Google</button>
+                <button id="firebase-signout-btn" type="button" disabled>Sign Out</button>
               </div>
               <label class="inline-check">
                 <input id="auto-sync" type="checkbox" />
-                Auto-push after changes
+                Auto-sync after changes
               </label>
-              <p class="hint" id="sync-status">
-                Sign in with Apple to sync this tracker with iCloud.
-              </p>
+              <p class="hint" id="sync-status">Firebase sync not configured</p>
             </div>
           </div>
         </div>
@@ -245,12 +241,16 @@
       </div>
     </template>
 
-    <script src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <!-- Firebase will be added here -->
+    <!-- Firebase (compat version for global usage) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
     <!-- Modular architecture -->
     <script src="./utils.js"></script>
     <script src="./data.js"></script>
-    <script src="./cloudkit.js"></script>
+    <script src="./firebase.js"></script>
     <script src="./charts.js"></script>
     <script src="./ui.js"></script>
     <script src="./app-new.js"></script>

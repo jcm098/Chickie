@@ -20,8 +20,8 @@ const refs = {
   settingsPanel: null,
   settingsContent: null,
   settingsToggle: null,
-  iCloudSigninBtn: null,
-  iCloudSignoutBtn: null,
+  firebaseSigninBtn: null,
+  firebaseSignoutBtn: null,
   syncStatus: null,
   autoSync: null,
   chartWindow: null,
@@ -50,8 +50,8 @@ function initReferences() {
   refs.settingsPanel = document.getElementById("settings-panel");
   refs.settingsContent = document.getElementById("settings-content");
   refs.settingsToggle = document.getElementById("settings-toggle");
-  refs.iCloudSigninBtn = document.getElementById("icloud-signin-btn");
-  refs.iCloudSignoutBtn = document.getElementById("icloud-signout-btn");
+  refs.firebaseSigninBtn = document.getElementById("firebase-signin-btn");
+  refs.firebaseSignoutBtn = document.getElementById("firebase-signout-btn");
   refs.syncStatus = document.getElementById("sync-status");
   refs.autoSync = document.getElementById("auto-sync");
   refs.chartWindow = document.getElementById("chart-window");
@@ -145,11 +145,9 @@ function bindForms() {
     setSyncStatus(data.household.autoSync ? "Auto-sync enabled." : "Auto-sync disabled.");
   });
 
-  // CloudKit sync
-  refs.iCloudSigninBtn.addEventListener("click", signInCloudKit);
-  refs.iCloudSignoutBtn.addEventListener("click", signOutCloudKit);
-  document.getElementById("pull-sync-btn")?.addEventListener("click", () => pullFromSync());
-  document.getElementById("push-sync-btn")?.addEventListener("click", () => pushToSync());
+  // Firebase sync
+  refs.firebaseSigninBtn.addEventListener("click", signInFirebase);
+  refs.firebaseSignoutBtn.addEventListener("click", signOutFirebase);
 
   // Charts
   refs.chartWindow.addEventListener("change", renderCharts);
