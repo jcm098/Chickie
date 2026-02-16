@@ -7,6 +7,25 @@ const APP_VERSION = "2.1.0-optimized";
 const BUILD_DATE = "2026-02-14";
 
 /**
+ * Show a small banner when a new app version is available
+ */
+function showUpdateBanner() {
+  const banner = document.createElement("div");
+  banner.setAttribute("role", "status");
+  banner.className = "update-banner";
+  banner.innerHTML = "Update available. <button type=\"button\" class=\"update-banner-btn\">Refresh</button>";
+  const btn = banner.querySelector("button");
+  btn.addEventListener("click", () => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: "SKIP_WAITING" });
+    }
+    window.location.reload();
+  });
+  document.body.appendChild(banner);
+  window.addEventListener("controllerchange", () => window.location.reload());
+}
+
+/**
  * Register service worker for PWA support
  */
 function registerServiceWorker() {
@@ -22,8 +41,7 @@ function registerServiceWorker() {
           if (newWorker) {
             newWorker.addEventListener("statechange", () => {
               if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-                // New service worker is ready
-                console.log("App update available. Refresh to update.");
+                showUpdateBanner();
               }
             });
           }

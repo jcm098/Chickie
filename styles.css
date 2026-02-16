@@ -26,6 +26,47 @@
   box-sizing: border-box;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.6rem 1rem;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 10px 0;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.update-banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--panel);
+  border: 1px solid rgba(19, 39, 24, 0.15);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  font-size: 0.9rem;
+}
+
+.update-banner-btn {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+}
+
 body {
   margin: 0;
   color: var(--ink);

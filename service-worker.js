@@ -3,7 +3,7 @@
  * Enables offline support and caching
  */
 
-const CACHE_VERSION = "chicken-tracker-v1";
+const CACHE_VERSION = "chicken-tracker-v2";
 const CACHEABLE_ASSETS = [
   "./" ,
   "./index.html",

@@ -381,5 +381,16 @@ To enable family data sharing:
 
 ---
 
+### Further optimization recommendations
+
+- **Layout:** Use CSS custom properties for breakpoints and spacing (partially done). Consider `clamp()` for typography scale.
+- **Charts:** Chart.js colors are light-theme only; dark mode uses a canvas filter. For a polished dark theme, pass theme-aware colors into chart configs (e.g. from `getComputedStyle` or CSS variables).
+- **Performance:** Scripts use `defer` for non-blocking parse. For very slow networks, consider lazy-loading Chart.js when the charts section scrolls into view (Intersection Observer).
+- **Service worker:** Bump `CACHE_VERSION` in `service-worker.js` whenever you ship asset or layout changes so returning users get fresh files.
+- **Accessibility:** Skip link and semantic regions are in place. Optional: announce live updates (e.g. “3 tasks due”) with `aria-live` and move focus into the settings panel when it opens for keyboard users.
+- **Analytics:** If you add analytics, keep them behind a consent check and load scripts asynchronously.
+
+---
+
 **Implementation Date:** February 14, 2026  
 **Version:** 2.0 (Modular Architecture)

@@ -467,10 +467,25 @@ function onReset() {
 
 // RENDERING FUNCTIONS
 
+let renderScheduled = false;
+let hasRenderedOnce = false;
+
 /**
- * Render all UI elements
+ * Schedule a full re-render on the next animation frame (batches rapid updates).
  */
-function renderAll() {
+function scheduleRender() {
+  if (renderScheduled) return;
+  renderScheduled = true;
+  requestAnimationFrame(() => {
+    renderScheduled = false;
+    renderAllImmediate();
+  });
+}
+
+/**
+ * Render all UI elements immediately (used on init and when batching isn't needed).
+ */
+function renderAllImmediate() {
   renderHouseholdControls();
   renderStats();
   renderCharts();
@@ -481,6 +496,18 @@ function renderAll() {
   renderTasks();
   renderInventory();
   renderVersionInfo();
+}
+
+/**
+ * Render all UI elements. First call is immediate; later calls are batched to the next frame.
+ */
+function renderAll() {
+  if (!hasRenderedOnce) {
+    hasRenderedOnce = true;
+    renderAllImmediate();
+    return;
+  }
+  scheduleRender();
 }
 
 function renderHouseholdControls() {
