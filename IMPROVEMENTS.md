@@ -67,7 +67,7 @@ Comprehensive validation has been added throughout the application:
 
 **Error Handling:**
 - Storage quota exceeded errors caught and reported
-- CloudKit operations wrapped in try-catch
+- Firebase/sync operations wrapped in try-catch
 - Data loading with fallback to defaults on parse errors
 - User-friendly error messages displayed via alerts
 - Console logging for debugging
@@ -225,7 +225,7 @@ The application now uses modular JavaScript. The changes are **fully backward co
 
 ### To use the new version:
 1. All files are in place and ready to use
-2. The `index.html` now loads the modular files: `utils.js`, `data.js`, `cloudkit.js`, `charts.js`, `ui.js`, `app-new.js`
+2. The `index.html` now loads the modular files: `utils.js`, `data.js`, `firebase.js`, `charts.js`, `ui.js`, `app-new.js`
 3. The browser will automatically cache assets via the Service Worker
 4. Dark mode will activate if the user's OS has dark mode enabled
 
@@ -294,7 +294,7 @@ If needed, revert to the original monolithic version:
    ```html
    <script src="./utils.js"></script>
    <script src="./data.js"></script>
-   <script src="./cloudkit.js"></script>
+   <script src="./firebase.js"></script>
    <script src="./charts.js"></script>
    <script src="./ui.js"></script>
    <script src="./app-new.js"></script>

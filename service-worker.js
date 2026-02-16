@@ -10,7 +10,7 @@ const CACHEABLE_ASSETS = [
   "./styles.css",
   "./utils.js",
   "./data.js",
-  "./cloudkit.js",
+  "./firebase.js",
   "./charts.js",
   "./ui.js",
   "./app-new.js"
@@ -59,7 +59,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // For external CDN requests (Chart.js, CloudKit, fonts), use network-first strategy
+  // For external CDN requests (Chart.js, Firebase, fonts), use network-first strategy
   const url = new URL(event.request.url);
   if (url.hostname !== self.location.hostname) {
     event.respondWith(

@@ -12,7 +12,7 @@ A lightweight browser app for tracking:
 
 ## Run
 
-Open `/Users/jeff/Desktop/Chicken Tracker/index.html` in a browser.
+Open `index.html` in a browser (e.g. double-click or drag into a browser window).
 
 ## Features
 
@@ -26,7 +26,7 @@ Open `/Users/jeff/Desktop/Chicken Tracker/index.html` in a browser.
 - Responsive mobile + laptop layout
 - Collapsible Settings panel to keep the dashboard focused
 - Local data persistence in browser storage (local-first)
-- Optional iCloud sync with Apple ID (CloudKit JS pull/push + auto-push)
+- Optional sync via Firebase (Google sign-in, multi-device family sharing)
 - JSON export/import backup tools
 
 ## Units
@@ -42,21 +42,14 @@ Open `/Users/jeff/Desktop/Chicken Tracker/index.html` in a browser.
 3. Records and task completions are tagged by member.
 4. If someone was deleted/renamed, use **Merge Member Records** to merge old stats into another person.
 
-## iCloud Setup (CloudKit JS)
+## Firebase Sync (optional)
 
-1. In `/Users/jeff/Desktop/Chicken Tracker/app.js`, set:
-   - `CLOUDKIT_CONTAINER_ID`
-   - `CLOUDKIT_ENVIRONMENT` (`development` or `production`)
-   - `CLOUDKIT_API_TOKEN`
-2. Open the app and click **Sign In with Apple**.
-3. Click **Push to iCloud** to upload this device's state.
-4. On other Apple devices signed into the same Apple ID, click **Pull from iCloud**.
-5. Optionally enable **Auto-push after changes**.
-
-## Current CloudKit Scope
-
-- Current implementation syncs one shared app snapshot in the signed-in user's private iCloud database.
-- Multi-Apple-ID family sharing via CloudKit record sharing is a separate step and not yet implemented in this web app.
+1. In `firebase.js`, set `FIREBASE_CONFIG` with your Firebase project credentials.
+2. In Firebase Console, create a Realtime Database (locked mode) and add the security rules described in `IMPROVEMENTS.md`.
+3. Open the app and click **Sign In with Google**.
+4. Create or select a flock, then use **Push to Cloud** / **Pull from Cloud** to sync.
+5. Optionally enable **Auto-sync after changes**.
+6. To share with family, add their Google account UIDs to the flock’s `sharedWith` in Firebase (see `IMPROVEMENTS.md`).
 
 ## Data
 

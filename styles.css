@@ -8,6 +8,18 @@
   --warn: #b73d2f;
   --ring: #7cb8ff;
   --shadow: 0 12px 26px rgba(19, 39, 24, 0.11);
+  /* Layout */
+  --space-xs: 0.35rem;
+  --space-sm: 0.6rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --section-gap: 1.25rem;
+  --panel-padding: 1.15rem;
+  --bp-sm: 560px;
+  --bp-md: 768px;
+  --bp-lg: 960px;
+  --bp-xl: 1200px;
 }
 
 * {
@@ -26,16 +38,30 @@ body {
 }
 
 .app-shell {
-  max-width: 1200px;
+  max-width: var(--bp-xl);
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: var(--space-xl) var(--space-md) 3rem;
+}
+
+@media (min-width: 900px) {
+  .app-shell {
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
 }
 
 .hero {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: 1.4fr 1fr;
-  align-items: stretch;
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .hero {
+    grid-template-columns: 1.35fr 1fr;
+    align-items: stretch;
+  }
 }
 
 .eyebrow {
@@ -76,7 +102,7 @@ h1 {
 
 .profile-box,
 .panel {
-  padding: 1rem;
+  padding: var(--panel-padding);
 }
 
 .settings-head {
@@ -133,11 +159,21 @@ h1 {
   margin-bottom: 0;
 }
 
-.profile-box hr {
+.profile-box hr,
+.section-divider {
   border: 0;
   height: 1px;
   background: rgba(19, 39, 24, 0.12);
-  margin: 1rem 0;
+  margin: var(--space-md) 0;
+}
+
+.section-divider {
+  opacity: 0.5;
+}
+
+.version-line {
+  margin: var(--space-xs) 0 0;
+  font-size: 0.85rem;
 }
 
 .stack {
@@ -209,14 +245,27 @@ button:hover {
 }
 
 .stats-grid {
-  margin-top: 1rem;
+  margin-top: var(--section-gap);
   display: grid;
-  gap: 0.8rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-sm);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: var(--bp-sm)) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+@media (min-width: var(--bp-lg)) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    max-width: 100%;
+  }
 }
 
 .stat-card {
-  padding: 0.9rem;
+  padding: var(--panel-padding);
 }
 
 .stat-card p {
@@ -230,10 +279,22 @@ button:hover {
 }
 
 .trend-grid {
-  margin-top: 1rem;
+  margin-top: var(--section-gap);
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: var(--bp-md)) {
+  .trend-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: var(--bp-lg)) {
+  .trend-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }
 
 .panel-head {
@@ -322,19 +383,31 @@ button:hover {
 }
 
 .module-grid {
-  margin-top: 1rem;
+  margin-top: var(--section-gap);
   display: grid;
-  gap: 0.9rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: var(--bp-md)) {
+  .module-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: var(--bp-lg)) {
+  .module-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
 .list {
-  margin-top: 0.9rem;
+  margin-top: var(--space-sm);
   display: grid;
-  gap: 0.5rem;
+  gap: var(--space-xs);
   max-height: 260px;
   overflow: auto;
-  padding-right: 0.3rem;
+  padding-right: var(--space-xs);
 }
 
 .row {
@@ -394,13 +467,11 @@ button:hover {
   font-size: 0.87rem;
 }
 
-@media (max-width: 1050px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .module-grid {
-    grid-template-columns: 1fr;
+/* Tablet: show settings first so dashboard is below */
+@media (min-width: 560px) and (max-width: 900px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
   }
 
   .profile-box {
@@ -408,21 +479,9 @@ button:hover {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 559px) {
   .app-shell {
-    padding: 1rem 0.75rem 2rem;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .trend-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .chart-canvas {
-    height: 100%;
+    padding: var(--space-md) 0.75rem 2rem;
   }
 
   .chart-frame {
