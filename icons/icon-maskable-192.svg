@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect fill="#5fd386" width="192" height="192"/>
+  <!-- Chicken body -->
+  <ellipse cx="96" cy="120" rx="35" ry="28" fill="#1a1f1c"/>
+  <!-- Chicken head -->
+  <circle cx="96" cy="85" r="22" fill="#1a1f1c"/>
+  <!-- Beak -->
+  <ellipse cx="96" cy="95" rx="8" ry="5" fill="#f3f6ef"/>
+  <!-- Eyes -->
+  <circle cx="88" cy="78" r="3" fill="#5fd386"/>
+  <circle cx="104" cy="78" r="3" fill="#5fd386"/>
+  <!-- Wattle -->
+  <ellipse cx="96" cy="100" rx="4" ry="6" fill="#ff6b6b"/>
+  <!-- Tail -->
+  <path d="M130 115 Q145 105 135 125 Q140 135 130 130 Z" fill="#1a1f1c"/>
+  <!-- Legs -->
+  <line x1="88" y1="145" x2="82" y2="155" stroke="#f3f6ef" stroke-width="3" stroke-linecap="round"/>
+  <line x1="104" y1="145" x2="110" y2="155" stroke="#f3f6ef" stroke-width="3" stroke-linecap="round"/>
+</svg>
